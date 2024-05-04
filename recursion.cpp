@@ -104,7 +104,7 @@ int calculate_power_recursive(int base, int exponent) {
 int calculate_power_helper(int base, int exponent) {
     if (exponent < 0) {
         std::cout << "cant handle negative exponents" << std::endl;
-        return 0;
+        return 0; // default return 0 if exponent input is negative
     }
     return calculate_power_recursive(base, exponent);
 }
