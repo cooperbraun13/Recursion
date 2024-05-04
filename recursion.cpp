@@ -88,7 +88,76 @@ int calculate_power_recursive(int base, int exponent);
 int caclulate_power_helper(int base, int exponent);
 bool test_calculate_power();
 
+int calculate_power_recursive(int base, int exponent) {
+    // base cases
+    if (exponent == 0) {
+        return 1; // any number to the power of 0 is 1
+    }
+    if (exponent == 1) {
+        return base; // any number to the power of 1 is the number
+    }
+
+    // recursive case = base * base^(exponent - 1)
+    return base * calculate_power_recursive(base, exponent - 1);
+}
+
+int calculate_power_helper(int base, int exponent) {
+    if (exponent < 0) {
+        std::cout << "cant handle negative exponents" << std::endl;
+        return 0;
+    }
+    return calculate_power_recursive(base, exponent);
+}
+
+bool test_calculate_power() {
+    // setup
+    int test_1_base = 5;
+    int test_1_exponent = 3;
+    int test_1_expected = 125;
+
+    int test_2_base = 2;
+    int test_2_exponent = 6;
+    int test_2_expected = 64;
+
+    int test_3_base = 4;
+    int test_3_exponent = 1;
+    int test_3_expected = 4;
+
+    int test_4_base = 7;
+    int test_4_exponent = 0;
+    int test_4_expected = 1;
+
+    int test_5_base = -1;
+    int test_5_exponent = 3;
+    int test_5_expected = -1;
+
+    int test_6_base = 3;
+    int test_6_exponent = -1;
+    int test_6_expected = 0; // anything to negative power defaults to output 0
+
+    // execution 
+    int test_1_result = calculate_power_helper(test_1_base, test_1_exponent);
+    int test_2_result = calculate_power_helper(test_2_base, test_2_exponent);
+    int test_3_result = calculate_power_helper(test_3_base, test_3_exponent);
+    int test_4_result = calculate_power_helper(test_4_base, test_4_exponent);
+    int test_5_result = calculate_power_helper(test_5_base, test_5_exponent);
+    int test_6_result = calculate_power_helper(test_6_base, test_6_exponent);
+
+    // validation
+    assert(test_1_expected == test_1_result);
+    assert(test_2_expected == test_2_result);
+    assert(test_3_expected == test_3_result);
+    assert(test_4_expected == test_4_result);
+    assert(test_5_expected == test_5_result);
+    assert(test_6_expected == test_6_result);
+
+    // cleanup
+    return true;
+}
+
+
 int main() {
     test_recursive_function();
+    test_calculate_power();
     return 0;
 }
